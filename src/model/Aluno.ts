@@ -191,16 +191,4 @@ export class Aluno {
     public setCelular(celular: string): void {
         this.celular = celular;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
