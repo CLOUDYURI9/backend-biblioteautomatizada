@@ -1,3 +1,7 @@
+import { DatabaseModel } from "./DatabaseModel";
+
+const database =  new DatabaseModel().pool;
+
 /**
  * Classe que representa um emprestimo.
  */
@@ -16,7 +20,7 @@ export class Emprestimo {
     private dataDevolucao: Date;
     /* Status de emprestimo do aluno*/
     private statusEmprestimo: string;
-    
+
     /**
      * Construtor da classe Emprestimo
      * 
@@ -32,7 +36,7 @@ export class Emprestimo {
         dataEmprestimo: Date,
         dataDevolucao: Date,
         statusEmprestimo: string,
-    ){
+    ) {
         this.idAluno = idAluno;
         this.idLivro = idLivro;
         this.dataEmprestimo = dataEmprestimo;
@@ -81,7 +85,7 @@ export class Emprestimo {
      * @returns {string} O identificador do livro.
      */
     public getIdLivro(): number {
-    return this.idLivro;
+        return this.idLivro;
     }
 
     /**
@@ -135,7 +139,7 @@ export class Emprestimo {
      * @returns {string} O status de emprestimo do livro.
      */
     public getStatusEmprestimo(): string {
-    return this.statusEmprestimo;
+        return this.statusEmprestimo;
     }
 
     /**
@@ -145,5 +149,55 @@ export class Emprestimo {
     */
     public setStatusEmprestimo(statusEmprestimo: string): void {
         this.statusEmprestimo = statusEmprestimo;
+    }
+
+
+    //METODO PARA ACESSAR O BANCO DE DADOS
+    //CRUD CREAT - READ - UPDATE - DELETE
+
+    /**
+    * Método estático responsável por listar todos os emprestimos do banco de dados.
+    * Este método faz uma consulta no banco de dados, cria objetos `Emprestimo` para cada 
+    * linha retornada e os adiciona a uma lista, que é retornada ao final.
+    * 
+    * @returns {Promise<Array<Emprestimo> | null>} Retorna uma lista de objetos `Emprestimo` 
+    * em caso de sucesso, ou `null` em caso de erro.
+    */
+    static async listarEmprestimo(): Promise<Array<Emprestimo> | null> {
+        //criando lista vazia para armazenar os livros
+        let listaDeEmprestimo: Array<Emprestimo> = [];
+
+        try {
+            //QUERY PARA CONSULTA NO BANCO DE DADOS
+            const querySelectEmprestimo = `SELECT * FROM emprestimo;`;
+
+            //EXECUTA A QUERY NO BANCO DE DADOS
+            const respostaBD = await database.query(querySelectEmprestimo);
+
+            //PERCORRE CADA RESULTADO RETORNADO PELO BANCO DE DADOS
+            //LIVRO É O APELIDO QUE DEMOS PARA CADA LINHA RETPRNADO DO BANCO DE DADOS
+
+            //CRIANDO OBJETO ALUNO
+            respostaBD.rows.forEach((emprestimo) => {
+                let novaEmprestimo = new Emprestimo(
+                    emprestimo.idAluno,
+                    emprestimo.idLivro,
+                    emprestimo.dataEmprestimo,
+                    emprestimo.dataDevolucao,
+                    emprestimo.statusEmprestimo
+                );
+                // adicionando o ID ao objeto
+                novaEmprestimo.setIdEmprestimo(emprestimo.id_emprestimo);
+
+                //adicionando o aluno na lista
+                listaDeEmprestimo.push(novaEmprestimo);
+            });
+
+            return listaDeEmprestimo;
+
+        } catch (error) {
+            console.log(`Erro ao acessar o modelo : ${error}`);
+            return null;
+        }
     }
 }
