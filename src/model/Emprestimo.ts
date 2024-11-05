@@ -180,11 +180,11 @@ export class Emprestimo {
             //CRIANDO OBJETO ALUNO
             respostaBD.rows.forEach((emprestimo) => {
                 let novaEmprestimo = new Emprestimo(
-                    emprestimo.idAluno,
-                    emprestimo.idLivro,
-                    emprestimo.dataEmprestimo,
-                    emprestimo.dataDevolucao,
-                    emprestimo.statusEmprestimo
+                    emprestimo.id_aluno,
+                    emprestimo.id_livro,
+                    emprestimo.data_emprestimo,
+                    emprestimo.data_devolucao,
+                    emprestimo.status_emprestimo
                 );
                 // adicionando o ID ao objeto
                 novaEmprestimo.setIdEmprestimo(emprestimo.id_emprestimo);

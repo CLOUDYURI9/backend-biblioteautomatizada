@@ -277,12 +277,12 @@ export class Livro {
                     livro.titulo,
                     livro.autor,
                     livro.editora,
-                    livro.anoPublicado,
+                    livro.ano_publicacao,
                     livro.isbn,
-                    livro.quantTotal,
-                    livro.quantDisponivel,
-                    livro.valorAquisicao,
-                    livro.statusLivroEmprestado
+                    livro.quant_total,
+                    livro.quant_disponivel,
+                    livro.valor_aquisicao,
+                    livro.status_livro_emprestado
                 );
                 // adicionando o ID ao objeto
                 novaLivro.setIdLivro(livro.id_livro);

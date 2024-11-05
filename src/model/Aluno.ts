@@ -225,13 +225,14 @@ export class Aluno {
                 let novaAluno = new Aluno(
                     aluno.nome,
                     aluno.sobrenome,
-                    aluno.dataNascimento,
+                    aluno.data_nascimento,
                     aluno.endereco,
                     aluno.email,
                     aluno.celular
                 );
                 // adicionando o ID ao objeto
                 novaAluno.setIdAluno(aluno.id_aluno);
+                novaAluno.setRa(aluno.ra);
 
                 //adicionando o aluno na lista
                 listaDeAluno.push(novaAluno);
