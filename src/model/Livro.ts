@@ -353,4 +353,69 @@ export class Livro {
             return false;
         }
     }
+
+    static async removerLivro(idLivro: number): Promise<boolean> {
+        try {
+            //cria uma query para deletar um objeto do banco de dados, passando como parametro o id do livro recebido na função
+            const queryDeleteLivro = `DELETE FROM livro WHERE id_livro = ${idLivro}`
+        
+            //executar a query e armazenar a resposta do BD
+            const respostaBD = await database.query(queryDeleteLivro);
+
+            //verifica se a quantidade de linhas modificadas é diferente de 0
+            if(respostaBD.rowCount != 0) {
+                console.log(`Livro removido com sucesso! ID do emprestimo: ${idLivro}`);
+                //true significa que a remoção foi bem sucedida
+                return true;
+            }
+            //false, o que indica que a remoção não foi bem sucedida
+            return false; 
+            
+
+        //trata qualquer erro que possa acontecer no caminho
+        } catch (error) {
+            //exibe uma mensagem de erro
+            console.log(`Erro ao remover o livro. Verifique os logs para mais detalhes.`)
+            //imprime o erro no console da API
+            console.log(error);
+            //retorna false, o que indica a remoção não foi feita
+            return false;   
+        }
+    }
+
+    static async atualizarLivro(livro: Livro): Promise<boolean> {
+        try {
+            //cria a query de update a ser executada no bando de dados
+            const queryUpdateLivro = `UPDATE livro SET
+                                        titulo = '${livro.getTitulo()}',
+                                        autor = '${livro.getAutor()}',
+                                        editora = ${livro.getEditora()},
+                                        ano_publicacao = '${livro.getAnoPublicado()}',
+                                        isbn = '${livro.getIsbn()}',
+                                        quant_total = '${livro.getQuantTotal()}',
+                                        quant_disponivel = '${livro.getQuantDisponivel()}',
+                                        valor_aquisicao = '${livro.getValorAquisicao()}',
+                                        status_emprestimo = '${livro.getValorAquisicao()}'
+                                        WHERE id_livro = ${livro.getIdLivro()};`;
+
+            // executar a query e armazenar a resposta do banco de dados em uma variazvel
+            const respostaBD = await database.query(queryUpdateLivro);
+            //verifica se alguma linha foi alterado
+            if(respostaBD.rowCount != 0) {
+                //imprime uma mensagem de sucesso no console
+                console.log(`Livro atualizado com sucesso! ID do Livro: ${livro.getIdLivro()}`);
+                return true;
+            }
+            //retorna falso, indicando que a query não foi executada com sucesso.
+            return false; 
+
+        } catch (error) {
+             //exibe uma mensagem de erro
+             console.log(`Erro ao atualizar livro. Verifique os logs para mais detalhes.`)
+             //imprime o erro no console da API
+             console.log(error);
+             //retorna false, o que indica a remoção não foi feita
+             return false;   
+        }
+    }   
 }

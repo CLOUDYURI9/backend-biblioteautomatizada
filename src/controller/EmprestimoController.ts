@@ -39,6 +39,64 @@ class EmprestimoController extends Emprestimo{
             res.status(400).json("Erro ao recuperaras informações de emprestimos");
         }
     }
+
+    static async remover(req: Request, res: Response): Promise<any> {
+        try {
+            // recuperando o id do emprestimo que será removido
+            const idEmprestimo = parseInt(req.params.idEmprestimo as string);
+
+            // chamando a função de remoção de emprestimo
+            const respostaModelo = await Emprestimo.removerEmprestimo(idEmprestimo);
+            
+            // verificando a resposta da função
+            if (respostaModelo) {
+                // retornar uma mensagem de sucesso
+                return res.status(200).json({ mensagem: "Emprestimo removido com sucesso!" });
+            } else {
+                // retorno uma mensagem de erro
+                return res.status(400).json({ mensagem: "Erro ao remover o emprestimo. Entre em contato com o administrador do sistema." })
+            }
+        } catch (error) {
+            // lança uma mensagem de erro no console
+            console.log(`Erro ao remover um emprestimo. ${error}`);
+
+            // retorna uma mensagem de erro há quem chamou a mensagem
+            return res.status(400).json({ mensagem: "Não foi possível remover o emprestimo. Entre em contato com o administrador do sistema." });
+        }
+    }
+
+    static async atualizar(req: Request, res: Response): Promise<any> {
+        try {
+            //recupera as informações a serem atualizadoas no corpo da requisição
+            const emprestimoRecebido: EmprestimoDTO = req.body;
+            const idEmprestimoRecebido = parseInt(req.params.idEmprestimo as string);
+
+            const emprestimoAtualizado = new Emprestimo(
+                emprestimoRecebido.idALuno,
+                emprestimoRecebido.idLivro,
+                emprestimoRecebido.dataEmprestimo,
+                emprestimoRecebido.dataDevolucao,
+                emprestimoRecebido.statusEmprestimo
+            );
+
+            emprestimoAtualizado.setIdEmprestimo(idEmprestimoRecebido);
+
+            const respostaModelo = await Emprestimo.atualizarEmprestimo(emprestimoAtualizado);
+
+            if(respostaModelo) {
+                return res.status(200).json({ mensagem: "Emprestimo atualizado com sucesso!"});
+            }else{
+            return res.status(400).json({ mensagem: "Erro ao atualizar o emprestimo. Entre em contato com o administrador do sistema"})
+            }
+
+        } catch (error) {
+            // lança uma mensagem de erro no console
+            console.log(`Erro ao atualizar um emprestimo. ${error}`);
+
+            // retorna uma mensagem de erro há quem chamou a mensagem
+            return res.status(400).json({ mensagem: "Não foi possível atualizar o emprestimo. Entre em contato com o administrador do sistema." });
+        }
+    }
 }
 
 export default EmprestimoController;

@@ -298,6 +298,69 @@ export class Aluno {
             return false;
         }
     }
+
+    static async removerAluno(idAluno: number): Promise<boolean> {
+        try {
+            //cria uma query para deletar um objeto do banco de dados, passando como parametro o id do cliente recebido na função
+            const queryDeleteAluno = `DELETE FROM aluno WHERE id_aluno = ${idAluno}`
+        
+            //executar a query e armazenar a resposta do BD
+            const respostaBD = await database.query(queryDeleteAluno);
+
+            //verifica se a quantidade de linhas modificadas é diferente de 0
+            if(respostaBD.rowCount != 0) {
+                console.log(`Aluno removido com sucesso! ID do aluno: ${idAluno}`);
+                //true significa que a remoção foi bem sucedida
+                return true;
+            }
+            //false, o que indica que a remoção não foi bem sucedida
+            return false; 
+            
+
+        //trata qualquer erro que possa acontecer no caminho
+        } catch (error) {
+            //exibe uma mensagem de erro
+            console.log(`Erro ao remover o aluno. Verifique os logs para mais detalhes.`)
+            //imprime o erro no console da API
+            console.log(error);
+            //retorna false, o que indica a remoção não foi feita
+            return false;   
+        }
+    }
+
+    static async atualizarAluno(aluno: Aluno): Promise<boolean> {
+        try {
+            //cria a query de update a ser executada no bando de dados
+            const queryUpdateAluno = `UPDATE aluno SET
+                                        nome = '${aluno.getNome()}',
+                                        sobrenome = '${aluno.getSobrenome()}',
+                                        data_nascimento = '${aluno.getDataNascimento()}',
+                                        endereco = '${aluno.getEndereco()}'
+                                        WHERE id_aluno = ${aluno.getIdAluno()};`;
+
+            // executar a query e armazenar a resposta do banco de dados em uma variazvel
+            const respostaBD = await database.query(queryUpdateAluno);
+            //verifica se alguma linha foi alterado
+            if(respostaBD.rowCount != 0) {
+                //imprime uma mensagem de sucesso no console
+                console.log(`Aluno atualizado com sucesso! ID do aluno: ${aluno.getIdAluno()}`);
+                return true;
+            }
+            //retorna falso, indicando que a query não foi executada com sucesso.
+            return false; 
+
+        } catch (error) {
+             //exibe uma mensagem de erro
+             console.log(`Erro ao atualizar aluno. Verifique os logs para mais detalhes.`)
+             //imprime o erro no console da API
+             console.log(error);
+             //retorna false, o que indica a remoção não foi feita
+             return false;   
+        }
+
+    }
+
+    
 }
 
 

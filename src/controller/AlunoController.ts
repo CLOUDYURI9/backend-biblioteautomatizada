@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import { Aluno } from "../model/Aluno";
 
 interface AlunoDTO {
@@ -28,7 +28,7 @@ class AlunoController extends Aluno{
      * @returns {Promise<void>} Retorna uma promessa que envia a lista de alunos
      * em caso de sucesso, ou uma mensagem de erro em caso de falha.
      */
-    static async todos(req: Request, res: Response): Promise<any> {
+    static async todos(req: Request, res: Response) {
         try {
             // Chama o método herdado de listar todos os alunos
             const listaDeAlunos =  await Aluno.listarAluno();
@@ -89,6 +89,65 @@ class AlunoController extends Aluno{
             return res.status(400).json({ mensagem: "Não foi possível cadastrar o aluno. Entre em contato com o administrador do sistema." });
         }
     }
+
+    static async remover(req: Request, res: Response): Promise<any> {
+        try {
+            // recuperando o id do aluno que será removido
+            const idAluno = parseInt(req.params.idAluno as string);
+
+            // chamando a função de remoção de cliente
+            const respostaModelo = await Aluno.removerAluno(idAluno);
+            
+            // verificando a resposta da função
+            if (respostaModelo) {
+                // retornar uma mensagem de sucesso
+                return res.status(200).json({ mensagem: "Aluno removido com sucesso!" });
+            } else {
+                // retorno uma mensagem de erro
+                return res.status(400).json({ mensagem: "Erro ao remover o aluno. Entre em contato com o administrador do sistema." })
+            }
+        } catch (error) {
+            // lança uma mensagem de erro no console
+            console.log(`Erro ao remover um aluno. ${error}`);
+
+            // retorna uma mensagem de erro há quem chamou a mensagem
+            return res.status(400).json({ mensagem: "Não foi possível remover o aluno. Entre em contato com o administrador do sistema." });
+        }
+    }
+    
+        static async atualizar(req: Request, res: Response): Promise<any> {
+            try {
+                //recupera as informações a serem atualizadoas no corpo da requisição
+                const alunoRecebido: AlunoDTO = req.body;
+                const idAlunoRecebido = parseInt(req.params.idAluno as string);
+
+                const alunoAtualizado = new Aluno(
+                    alunoRecebido.nome,
+                    alunoRecebido.sobrenome,
+                    alunoRecebido.dataNascimento,
+                    alunoRecebido.endereco,
+                    alunoRecebido.email,
+                    alunoRecebido.celular
+                );
+
+                alunoAtualizado.setIdAluno(idAlunoRecebido);
+
+                const respostaModelo = await Aluno.atualizarAluno(alunoAtualizado);
+
+                if(respostaModelo) {
+                    return res.status(200).json({ mensagem: "Aluno atualizado com sucesso!"});
+                }else{
+                return res.status(400).json({ mensagem: "Erro ao atualizar o aluno. Entre em contato com o administrador do sistema"})
+                }
+
+            } catch (error) {
+                // lança uma mensagem de erro no console
+                console.log(`Erro ao atualizar um aluno. ${error}`);
+
+                // retorna uma mensagem de erro há quem chamou a mensagem
+                return res.status(400).json({ mensagem: "Não foi possível atualizar o aluno. Entre em contato com o administrador do sistema." });
+            }
+        }
 }
 
 export default AlunoController;

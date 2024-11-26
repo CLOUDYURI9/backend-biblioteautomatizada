@@ -169,22 +169,31 @@ export class Emprestimo {
 
         try {
             //QUERY PARA CONSULTA NO BANCO DE DADOS
-            const querySelectEmprestimo = `SELECT * FROM emprestimo;`;
+            const querySelectEmprestimo = `SELECT 
+            id_emprestimo, aluno.nome AS nome_aluno, 
+            livro.titulo AS nome_livro,
+            data_emprestimo, data_devolucao, status_emprestimo
+        FROM 
+            Emprestimo
+        INNER JOIN 
+            Aluno ON Emprestimo.id_aluno = Aluno.id_aluno
+        INNER JOIN 
+            Livro ON Emprestimo.id_livro = Livro.id_livro;`;
 
             //EXECUTA A QUERY NO BANCO DE DADOS
             const respostaBD = await database.query(querySelectEmprestimo);
-
+            
             //PERCORRE CADA RESULTADO RETORNADO PELO BANCO DE DADOS
             //LIVRO É O APELIDO QUE DEMOS PARA CADA LINHA RETPRNADO DO BANCO DE DADOS
 
             //CRIANDO OBJETO ALUNO
             respostaBD.rows.forEach((emprestimo) => {
                 let novaEmprestimo = new Emprestimo(
-                    emprestimo.id_aluno,
-                    emprestimo.id_livro,
+                    emprestimo.nome_aluno,
+                    emprestimo.nome_livro,
                     emprestimo.data_emprestimo,
                     emprestimo.data_devolucao,
-                    emprestimo.status_emprestimo
+                    emprestimo.status_emprestimo                    
                 );
                 // adicionando o ID ao objeto
                 novaEmprestimo.setIdEmprestimo(emprestimo.id_emprestimo);
@@ -199,5 +208,66 @@ export class Emprestimo {
             console.log(`Erro ao acessar o modelo : ${error}`);
             return null;
         }
+    }
+
+    static async removerEmprestimo(idEmprestimo: number): Promise<boolean> {
+        try {
+            //cria uma query para deletar um objeto do banco de dados, passando como parametro o id do emprestimo recebido na função
+            const queryDeleteEmprestimo = `DELETE FROM emprestimo WHERE id_emprestimo = ${idEmprestimo}`
+        
+            //executar a query e armazenar a resposta do BD
+            const respostaBD = await database.query(queryDeleteEmprestimo);
+
+            //verifica se a quantidade de linhas modificadas é diferente de 0
+            if(respostaBD.rowCount != 0) {
+                console.log(`Emprestimo removido com sucesso! ID do emprestimo: ${idEmprestimo}`);
+                //true significa que a remoção foi bem sucedida
+                return true;
+            }
+            //false, o que indica que a remoção não foi bem sucedida
+            return false; 
+            
+
+        //trata qualquer erro que possa acontecer no caminho
+        } catch (error) {
+            //exibe uma mensagem de erro
+            console.log(`Erro ao remover o emprestimo. Verifique os logs para mais detalhes.`)
+            //imprime o erro no console da API
+            console.log(error);
+            //retorna false, o que indica a remoção não foi feita
+            return false;   
+        }
+    }
+
+    static async atualizarEmprestimo(emprestimo: Emprestimo): Promise<boolean> {
+        try {
+            //cria a query de update a ser executada no bando de dados
+            const queryUpdateEmprestimo = `UPDATE emprestimo SET
+                                        id_aluno = '${emprestimo.getIdAluno()}',
+                                        id_livro = '${emprestimo.getIdLivro()}',
+                                        data_emprestimo = ${emprestimo.getDataEmprestimo()},
+                                        data_devolucao = '${emprestimo.getDataDevolucao()}'
+                                        WHERE id_emprestimo = ${emprestimo.getIdEmprestimo()};`;
+
+            // executar a query e armazenar a resposta do banco de dados em uma variazvel
+            const respostaBD = await database.query(queryUpdateEmprestimo);
+            //verifica se alguma linha foi alterado
+            if(respostaBD.rowCount != 0) {
+                //imprime uma mensagem de sucesso no console
+                console.log(`Emprestimo atualizado com sucesso! ID do emprestimo: ${emprestimo.getIdEmprestimo()}`);
+                return true;
+            }
+            //retorna falso, indicando que a query não foi executada com sucesso.
+            return false; 
+
+        } catch (error) {
+             //exibe uma mensagem de erro
+             console.log(`Erro ao atualizar emprestimo. Verifique os logs para mais detalhes.`)
+             //imprime o erro no console da API
+             console.log(error);
+             //retorna false, o que indica a remoção não foi feita
+             return false;   
+        }
+
     }
 }
