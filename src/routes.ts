@@ -27,6 +27,7 @@ router.put("/atualizar/livro/:idLivro", LivroController.atualizar);
 
 
 router.get("/emprestimo", EmprestimoController.todos);
+router.post("/novo/emprestimo", EmprestimoController.novo);
 router.delete("/delete/emprestimo/:idEmprestimo", EmprestimoController.remover);
 router.put("/atualizar/emprestimo/:idEmprestimo", EmprestimoController.atualizar);
 

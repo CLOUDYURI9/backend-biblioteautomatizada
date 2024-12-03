@@ -389,13 +389,13 @@ export class Livro {
             const queryUpdateLivro = `UPDATE livro SET
                                         titulo = '${livro.getTitulo()}',
                                         autor = '${livro.getAutor()}',
-                                        editora = ${livro.getEditora()},
+                                        editora = '${livro.getEditora()}',
                                         ano_publicacao = '${livro.getAnoPublicado()}',
                                         isbn = '${livro.getIsbn()}',
                                         quant_total = '${livro.getQuantTotal()}',
                                         quant_disponivel = '${livro.getQuantDisponivel()}',
                                         valor_aquisicao = '${livro.getValorAquisicao()}',
-                                        status_emprestimo = '${livro.getValorAquisicao()}'
+                                        status_livro_emprestado = '${livro.getStatusLivroEmprestado()}'
                                         WHERE id_livro = ${livro.getIdLivro()};`;
 
             // executar a query e armazenar a resposta do banco de dados em uma variazvel

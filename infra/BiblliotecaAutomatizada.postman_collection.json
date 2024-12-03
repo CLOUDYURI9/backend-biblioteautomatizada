@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "10d8c04d-7709-4f60-bcbf-8de3a13072a3",
+		"name": "BiblliotecaAutomatizada",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38148689"
+	},
+	"item": [
+		{
+			"name": "Aluno",
+			"item": [
+				{
+					"name": "LISTAR ALUNO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/aluno/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"aluno",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRO ALUNO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"João\",\r\n    \"sobrenome\": \"Silva\",\r\n    \"dataNascimento\": \"2000-01-01\",  \r\n    \"endereco\": \"Rua Anão dos Penhares, 133\",\r\n    \"email\": \"joao.silva@example.com\",\r\n    \"celular\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/novo/aluno",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"novo",
+								"aluno"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "CADASTRO ALUNO",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"João\",\r\n    \"sobrenome\": \"Silva\",\r\n    \"dataNascimento\": \"2000-01-01\",  \r\n    \"endereco\": \"Rua Exemplo, 123\",\r\n    \"email\": \"joao.silva@example.com\",\r\n    \"celular\": \"1234567890\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/novo/aluno",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"novo",
+										"aluno"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "ATUALIZAR ALUNO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"JONAS\",\r\n    \"sobrenome\": \"SALOMAO\",\r\n    \"dataNascimento\": \"2008-09-01\",  \r\n    \"endereco\": \"Rua Anão dos Penhares, 133\",\r\n    \"email\": \"joao.silva@example.com\",\r\n    \"celular\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/aluno/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"aluno",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELTAR ALUNO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/delete/aluno/21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"delete",
+								"aluno",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Livro",
+			"item": [
+				{
+					"name": "LISTAR LIVRO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/livro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"livro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRO LIVRO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Procurando uma saída\",\r\n    \"autor\": \"OScar\",\r\n    \"editora\" : \"luz das estrelas\",\r\n    \"dataPublicacao\": \"2002-02-20\", \r\n    \"anoPublicado\": 2024,\r\n    \"isbn\": \"sjakqonsopu23219\",\r\n    \"quantTotal\": 7,\r\n    \"quantDisponivel\": 7,\r\n    \"valorAquisicao\": 90.00,\r\n    \"statusLivroEmprestado\": \"Concluido\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/novo/livro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"novo",
+								"livro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR LIVRO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Procurando uma saída\",\r\n    \"autor\": \"OScar\",\r\n    \"editora\" : \"luz das estrelas\",\r\n    \"dataPublicacao\": \"2002-02-20\", \r\n    \"anoPublicado\": 2024,\r\n    \"isbn\": \"sjakqonsopu23219\",\r\n    \"quantTotal\": 7,\r\n    \"quantDisponivel\": 7,\r\n    \"valorAquisicao\": 90.00,\r\n    \"statusLivroEmprestado\": \"Concluido\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/livro/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"livro",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR LIVRO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/delete/livro/29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"delete",
+								"livro",
+								"29"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emprestimo",
+			"item": [
+				{
+					"name": "LISTAR EMPRESTIMO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/emprestimo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"emprestimo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRO EMPRESTIMO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"idAluno\": 19,\r\n        \"idLivro\": 9,\r\n        \"dataEmprestimo\": \"2024-09-01T03:00:00.000Z\",\r\n        \"dataDevolucao\": \"2024-09-15T03:00:00.000Z\",\r\n        \"statusEmprestimo\": \"Em andamento\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/novo/emprestimo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"novo",
+								"emprestimo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR EMPRESTIMO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idAluno\": 20,\r\n    \"idLivro\": 1,\r\n    \"dataEmprestimo\": \"2024-09-01\",\r\n    \"dataDevolucao\": \"2024-09-01\",\r\n    \"statusEmprestimo\": \"Em andamento\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/emprestimo/31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"emprestimo",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR EMPRESTIMO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/delete/emprestimo/31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"delete",
+								"emprestimo",
+								"31"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

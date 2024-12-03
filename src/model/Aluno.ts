@@ -253,7 +253,7 @@ export class Aluno {
      * na tabela `aluno` do banco de dados. O método retorna um valor booleano indicando se o cadastro 
      * foi realizado com sucesso.
      * 
-     * @param {Aluno} aluno - Objeto contendo os dados do aluno que será cadastrado. O objeto `Carro`
+     * @param {Aluno} aluno - Objeto contendo os dados do aluno que será cadastrado. O objeto `Aluno`
      *                        deve conter os métodos `getNome()`, `getSobrenome()`, `getDataNascimento()`, `getEndereco`, `getEmail` e `getCelular()`
      *                        que retornam os respectivos valores do carro.
      * @returns {Promise<boolean>} - Retorna `true` se o aluno foi cadastrado com sucesso e `false` caso contrário.
